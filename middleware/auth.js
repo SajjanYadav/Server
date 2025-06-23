@@ -1,0 +1,35 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+exports.auth = (req, res, next) => {
+    try {
+        console.log("headers" , req.headers);
+        const token = req.headers["authorization"].replace("Bearer ", "");
+        console.log(req.body);
+        console.log(req.cookies);
+        if(!token){
+            return res.status(401).json({
+                success: false,
+                message: "Token not found!"
+            })
+        }
+
+        try {
+            const payload = jwt.verify(token, process.env.JWT_SECRET);
+            req.user = payload;
+        } catch (error) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid Token"
+            })
+        }
+
+        next();
+    } catch (error) {
+        console.log(error);
+        return res.status(401).json({
+            success: false,
+            message: "Internal server error while verifying the token"
+        })
+    }
+}

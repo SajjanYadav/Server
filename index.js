@@ -1,0 +1,25 @@
+const express = require('express');
+const app = express();
+require('dotenv').config();
+const userRoute = require('./routes/user.router')
+
+
+const db = require('./config/dbConnect');
+const PORT = process.env.PORT || 4000;
+
+app.use(express.json());
+
+app.get("/", (req, res) => {
+    res.send("Hello world");
+});
+
+db.dbConnect();
+
+
+app.use('/api/v1/auth', userRoute);
+
+
+
+app.listen(PORT, () => {
+    console.log("Server is running on part 8080");
+})
