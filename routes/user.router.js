@@ -16,5 +16,20 @@ router.route("/login").post(login);
 router.route("/sendOTP").post(sendOTP);
 
 
+/* ****************************************************************************************************** */
+/*                                               FILE ROUTES                                              */
+/* ****************************************************************************************************** */
+
+router.route('/file-upload').post(
+    upload.single('file'),               // here file is the field name not the fileName or file
+    auth,
+    fileUpload
+)
+
+router.route('/getUserFiles').post(
+    auth,
+    getFilesOfUser
+)
+
 
 module.exports = router
