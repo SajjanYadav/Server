@@ -2,12 +2,17 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const userRoute = require('./routes/user.router')
+const urlRoute = require('./routes/url.router')
+const sanitizeInput = require('./middleware/sanitizeInput')
+const limiter = require('./middleware/rateLimiter')
 
 
 const db = require('./config/dbConnect');
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
+app.use(sanitizeInput);
+app.use(limiter);
 
 app.get("/", (req, res) => {
     res.send("Hello world");
@@ -17,6 +22,7 @@ db.dbConnect();
 
 
 app.use('/api/v1/auth', userRoute);
+app.use('/api/v1/url', urlRoute)
 
 
 
