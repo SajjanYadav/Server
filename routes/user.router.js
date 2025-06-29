@@ -1,5 +1,5 @@
 const Router = require("express");
-const { login, signUp, sendOTP } = require("../controllers/Auth");
+const { login, signUp, sendOTP, auth0_login } = require("../controllers/Auth");
 const { upload } = require('../middleware/multer.middleware')
 const { auth } = require('../middleware/auth')
 const { fileUpload, getFilesOfUser } = require('../controllers/File')
@@ -14,6 +14,7 @@ const router = Router();
 router.route("/signUp").post(signUp); 
 router.route("/login").post(login);   
 router.route("/sendOTP").post(sendOTP);
+router.route("/auth0_login").post(auth0_login);
 
 
 /* ****************************************************************************************************** */

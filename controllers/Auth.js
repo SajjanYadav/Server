@@ -69,9 +69,9 @@ exports.sendOTP = async(req, res) => {
 exports.signUp = async (req, res) => {
     try{
         console.log(req.cookie);
-        const {firstName, lastName, email, password, confirmPassword} = req.body;
+        const {firstName, lastName, email, password, confirmPassword, otp} = req.body;
 
-        if(!firstName || !lastName || !email || !password || !confirmPassword)
+        if(!firstName || !lastName || !email || !password || !confirmPassword || !otp) 
         {
             return res.status(403).json({
                 success: false,
@@ -94,6 +94,25 @@ exports.signUp = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "User Already Exist"
+            })
+        }
+
+        const recentOTP = await OTP.find({email}).sort({createdAt: -1}).limit(1);
+        console.log("Recent OTP: ", recentOTP);
+
+        //if the otp matches, create the user
+
+        if(recentOTP.length === 0){
+            return res.status(401).json({
+                success: false,
+                message: "OTP not Found!"
+            })
+        }
+
+        if(recentOTP[0].otp !== otp){
+            return res.status(400).json({
+                success: false,
+                message: "OTP doesn't Matched"
             })
         }
 
@@ -209,3 +228,72 @@ exports.login = async (req, res) => {
 //one ootion is to store the jwt in local storage to prevent from getting stolen but one can acces it using attacks 
 //such as access or process cutting attack which allow them to access the local storage so we use 
 //httponly: so we can keep them in cookies and turining this flag on will prevent js from accessing it
+
+
+exports.auth0_login = async (req, res) => {
+    try {
+        const {auth0_id, email, name, image} = req.body;
+
+        if(!auth0_id || !email){
+            res.status(400).json({
+                success: false,
+                message: "Missing required fields"
+            })
+        }
+
+        let user = await User.findOne({auth0_id});
+
+        if (!user){
+
+            const [firstName, ...rest] = name?.split(" ") || ["User"];
+            const lastName = rest.join(" ") || "";
+
+            user = await User.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                auth0_id: auth0_id,
+                image: image,
+            });
+
+            if (!user) {
+                return res.status(500).json({
+                success: false,
+                message: "Error occurred while registering the user",
+                });
+            }
+        }
+
+        const payload = {
+            email: user.email,
+            id: user._id,
+            firstName: user.firstName,
+        };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "24h",
+        });
+
+        const options = {
+            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "Strict",
+        };
+
+        res.cookie("token", token, options).status(200).json({
+            success: true,
+            token,
+            message: "User logged in successfully",
+            data: user,
+        });
+
+
+    } catch (error) {
+        console.log("Error occured while registering the user :- ", error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+    }
+}

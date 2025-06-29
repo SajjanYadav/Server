@@ -16,15 +16,14 @@ const userSchema = new mongoose.Schema(
         },
         passwordHash: {
             type: String, 
-            required: false, 
+            required: function () {
+                return !this.auth0_id;
+            },
         },
-        googleId: {
+        auth0_id: {
             type: String, 
-            required: false,
-        },
-        noOfFileUploads: {
-            type: Number,
-            default: 0,
+            unique: true,
+            sparse: true,
         },
         files: [{
             type: mongoose.Schema.Types.ObjectId,
