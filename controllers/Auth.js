@@ -2,6 +2,7 @@ const User = require("../models/User")
 const bcrypt = require('bcrypt');
 const OTP = require('../models/OTP');
 const jwt = require('jsonwebtoken');
+const otpGenerator = require("otp-generator");
 
 exports.sendOTP = async(req, res) => {
     try {
@@ -17,7 +18,7 @@ exports.sendOTP = async(req, res) => {
 
         const existingUser = await User.findOne({email : email});
 
-        if(!existingUser)
+        if(existingUser)
         {
             return res.status(401).json({
                 success: false,

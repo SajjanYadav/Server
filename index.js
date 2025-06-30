@@ -5,7 +5,7 @@ const userRoute = require('./routes/user.router')
 const urlRoute = require('./routes/url.router')
 const sanitizeInput = require('./middleware/sanitizeInput')
 const limiter = require('./middleware/rateLimiter')
-
+const cors = require('cors');
 
 const db = require('./config/dbConnect');
 const PORT = process.env.PORT || 4000;
@@ -19,6 +19,13 @@ app.get("/", (req, res) => {
 });
 
 db.dbConnect();
+
+app.use(
+    cors({
+        origin: "http://localhost:3000",
+        credentials: true
+    })
+);
 
 
 app.use('/api/v1/auth', userRoute);

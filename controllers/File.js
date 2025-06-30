@@ -6,6 +6,7 @@ const User = require('../models/User');
 exports.fileUpload = async (req, res) => {
     try{
         const file = req.file;
+        const { id } = req.user; 
 
         if(!file){
             return res.status(400).json({
@@ -34,8 +35,15 @@ exports.fileUpload = async (req, res) => {
             url: response.secure_url
         })
 
+        const UpdatedUser = await User.findByIdAndUpdate({_id: id}, {
+            $push: {
+                files: saveToDB._id
+            },
+        }, {new: true});
+
         return res.status(200).json({
             success: true,
+            UpdatedUser,
             data: saveToDB,
             message: "File Uploaded Successfully"
         })
@@ -43,7 +51,7 @@ exports.fileUpload = async (req, res) => {
     }catch(error)
     {
         return res.status(500).json({
-            succcess: false,
+            success: false,
             message: error.message
         })
     }
@@ -71,7 +79,7 @@ exports.getFilesOfUser = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: error.message
         })

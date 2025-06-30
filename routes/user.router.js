@@ -27,7 +27,7 @@ router.route('/file-upload').post(
     fileUpload
 )
 
-router.route('/getUserFiles').post(
+router.route('/getUserFiles').get(
     auth,
     getFilesOfUser
 )
