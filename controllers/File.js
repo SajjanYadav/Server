@@ -19,6 +19,7 @@ exports.fileUpload = async (req, res) => {
         console.log(filePath);
 
         let filename = path.basename(filePath);
+        console.log("filename = ", filename);
 
         const response = await uploadOnCloudinary(filePath);
 
@@ -30,7 +31,7 @@ exports.fileUpload = async (req, res) => {
         }
 
         const saveToDB = await File.create({
-            filename,
+            fileName: filename,
             uploadedBy: req.user.id,
             url: response.secure_url
         })
@@ -71,6 +72,8 @@ exports.getFilesOfUser = async (req, res) => {
                 message: "Unable to Find User"
             })
         }
+
+        console.log(response.files);
 
         res.status(200).json({
             success: true,

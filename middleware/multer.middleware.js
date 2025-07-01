@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const fileFilter = (req, file, cb) => {
-    const allowedTypes = [".pdf", ".jpeg", ".png"];
+    const allowedTypes = [".pdf", ".jpeg", ".png", ".gif", ".mp4", ".jpg", ".webm"];
     const ext = path.extname(file.originalname).toLowerCase();
 
     if (allowedTypes.includes(ext)) {
