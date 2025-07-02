@@ -58,11 +58,11 @@ const otpTemplate = (otp) => {
 	<body style="background-color: #041E42; margin: 0; padding: 0; font-family: Arial, sans-serif; font-size: 16px; line-height: 1.4; color: #333333;">
 		<div class="container">
 			<a href=""><img class="logo"
-					src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="StudyNotion Logo"></a>
+					src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="FileShare Logo"></a>
 			<div class="message" style="color: white;">OTP Verification Email</div>
 			<div class="body" style="color: white;">
 				<p>Dear User,</p>
-				<p>Thank you for registering with StudyNotion. To complete your registration, please use the following OTP
+				<p>Thank you for registering with FileShare. To complete your registration, please use the following OTP
 					(One-Time Password) to verify your account:</p>
 				<h2 class="highlight" style="color: #FFD60A;">${otp}</h2>
 				<p>This OTP is valid for 5 minutes. If you did not request this verification, please disregard this email.

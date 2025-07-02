@@ -21,6 +21,10 @@ const fileSchema = mongoose.Schema(
         url: {
             type: String,
         },
+        shortUrl: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Url'
+        }
     }
 );
 

@@ -58,6 +58,7 @@ async function shortenUrlHandler(req, res, next) {
         }
 
         const urlDoc = await shortenUrl(url);
+        
         res.json({
             shortUrl: `http://${req.get('host')}/api/v1/url/${urlDoc.shortUrl}`
         });
