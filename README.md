@@ -27,7 +27,7 @@ Frontend: [https://file-share-delta.vercel.app](https://file-share-delta.vercel.
 
 ## 🧩 Project Structure
 
-\`\`\`
+```
 📦 server/
 ├── config/                # Cloudinary & MongoDB config
 ├── controllers/           # Core business logic
@@ -37,7 +37,7 @@ Frontend: [https://file-share-delta.vercel.app](https://file-share-delta.vercel.
 ├── routes/                # Auth & URL endpoints
 ├── services/              # Shorten & redirect logic
 └── index.js               # Server entry point
-\`\`\`
+```
 
 ---
 
@@ -45,22 +45,22 @@ Frontend: [https://file-share-delta.vercel.app](https://file-share-delta.vercel.
 
 ### 1️⃣ Clone the repository
 
-\`\`\`bash
+```bash
 git clone https://github.com/your-username/file-share-server.git
 cd file-share-server
-\`\`\`
+```
 
 ### 2️⃣ Install dependencies
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 ### 3️⃣ Setup environment variables
 
 Create a \`.env\` file in the root and add:
 
-\`\`\`env
+```env
 PORT=4000
 DATABASE_URL=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
@@ -70,38 +70,38 @@ CLOUDINARY_API_SECRET=your_api_secret
 MAIL_HOST=your_email_host
 MAIL_USER=your_email_user
 MAIL_PASS=your_email_pass
-\`\`\`
+```
 
 ### 4️⃣ Start the server
 
-\`\`\`bash
+```bash
 npm start
-\`\`\`
+```
 
 ---
 
-## 🔐 Authentication Routes (\`/api/v1/auth\`)
+## 🔐 Authentication Routes (`/api/v1/auth`)
 
 | Method | Endpoint     | Description              |
 |--------|--------------|--------------------------|
-| POST   | \`/signup\`  | Register new user        |
-| POST   | \`/login\`   | Authenticate & get token |
+| POST   | `/signup`    | Register new user        |
+| POST   | `/login`     | Authenticate & get token |
 
 ---
 
-## 📁 File Routes (\`/api/v1/url\`)
+## 📁 File Routes (`/api/v1/url`)
 
 | Method | Endpoint               | Description                |
 |--------|------------------------|----------------------------|
-| POST   | \`/file-upload\`       | Upload a file              |
-| GET    | \`/getUserFiles\`      | Get user's uploaded files  |
-| GET    | \`/url/:shortId\`      | Redirect to original URL   |
+| POST   | `/file-upload`         | Upload a file              |
+| GET    | `/getUserFiles`        | Get user's uploaded files  |
+| GET    | `/url/:shortId`        | Redirect to original URL   |
 
 ---
 
 ## 🔗 Sample Upload Response
 
-\`\`\`json
+```json
 {
   "success": true,
   "message": "File uploaded and URL shortened successfully",
@@ -115,7 +115,7 @@ npm start
     }
   }
 }
-\`\`\`
+```
 
 ---
 
@@ -123,9 +123,9 @@ npm start
 
 Server allows frontend access from:
 
-\`\`\`
+```
 https://file-share-delta.vercel.app
-\`\`\`
+```
 
 > ⚠️ Note: Ensure the URL **matches exactly** (no trailing slash)
 
