@@ -22,7 +22,7 @@ db.dbConnect();
 
 app.use(
     cors({
-        origin: "https://file-share-delta.vercel.app/",
+        origin: "https://file-share-delta.vercel.app",
         credentials: true
     })
 );
